@@ -20,23 +20,26 @@ import sqlite3
 import backend
 
 def get_selected_row(event):
-    global selectedTuple #Circumnavigates event handler
-    index=output.curselection()[0] #Curselection returns tuple [0] returns index
-    selectedTuple=output.get(index)
+    try:
+        global selectedTuple #Circumnavigates event handler
+        index=output.curselection()[0] #Curselection returns tuple [0] returns index
+        selectedTuple=output.get(index)
 
     #Fills entry Box
-    titleE.delete(0,END)
-    titleE.insert(END, selectedTuple[1])
+        titleE.delete(0,END)
+        titleE.insert(END, selectedTuple[1])
 
-    authorE.delete(0,END)
-    authorE.insert(END, selectedTuple[2])
+        authorE.delete(0,END)
+        authorE.insert(END, selectedTuple[2])
 
-    yearE.delete(0,END)
-    yearE.insert(END, selectedTuple[3])
+        yearE.delete(0,END)
+        yearE.insert(END, selectedTuple[3])
 
-    isbnE.delete(0,END)
-    isbnE.insert(END, selectedTuple[4])
-
+        isbnE.delete(0,END)
+        isbnE.insert(END, selectedTuple[4])
+    except IndexError:
+        pass
+    
 def view_command():
     output.delete(0,END) #Clear prior to output
     rows = backend.view()
