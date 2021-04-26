@@ -17,7 +17,10 @@ Delete a Record
 
 from tkinter import *
 import sqlite3
-import backend
+from backend import Database
+
+
+database = Database("books.db")
 
 def get_selected_row(event):
     try:
@@ -42,25 +45,25 @@ def get_selected_row(event):
     
 def view_command():
     output.delete(0,END) #Clear prior to output
-    rows = backend.view()
+    rows = database.view()
     for row in rows:
         output.insert(END, row)
 
 def insert_command():
-    backend.insertRow(titleE.get(), authorE.get(), yearE.get(), isbnE.get())
+    database.insertRow(titleE.get(), authorE.get(), yearE.get(), isbnE.get())
     output.delete(0,END)
     output.insert(END, (titleE.get(), authorE.get(), yearE.get(), isbnE.get()))
 
 def search_command():
     output.delete(0,END)
-    for row in backend.search(titleE.get(), authorE.get(), yearE.get(), isbnE.get()):
+    for row in database.search(titleE.get(), authorE.get(), yearE.get(), isbnE.get()):
         output.insert(END, row)
     
 def delete_command():
-    backend.delete(selectedTuple[0])
+    database.delete(selectedTuple[0])
 
 def update_command():
-    backend.update(selectedTuple[0], titleE.get(), authorE.get(), yearE.get(), isbnE.get())
+    database.update(selectedTuple[0], titleE.get(), authorE.get(), yearE.get(), isbnE.get())
 
 def close_command():
     window.destroy()
